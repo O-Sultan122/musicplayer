@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.music-player {
+    background: #ffe0e5;
+    width: 100%;
+    max-width: 400px;
+    padding: 25px 35px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+nav .circle {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: #fff;
+    color: #f53192;
+    box-shadow: 0 5px 10px rgba(255, 26, 26, 0.22);
+    cursor: pointer;
+}
+
+.song-img {
+    width: 220px;
+    border: 8px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 10px 60px rgba(255, 26, 26, 0.22);
+}
+
+.music-player h1 {
+    font-size: 20px;
+    font-weight: 400;
+    color: #333;
+    margin-top: 20px;
+}
+
+.music-player p {
+    font-size: 14px;
+    color: #333;
+}
+
+#progress {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #f53192;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 40px 0;
+    transition: background-color 0.3s ease;
+}
+
+#progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #f53192;
+    border-radius: 50%;
+    border: 8px solid #fff;
+    box-shadow: 0 5px 5px rgba(255, 26, 26, 0.22);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#progress::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.controls div {
+    width: 60px;
+    height: 60px;
+    margin: 20px;
+    background: #fff;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #f53192;
+    box-shadow: 0 10px 20px rgba(255, 26, 26, 0.22);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.controls div:hover {
+    background-color: #f53192;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.controls div:nth-child(2) {
+    transform: scale(1.5);
+    background: #f53192;
+    color: #fff;
+}
+
+@media (max-width: 500px) {
+    .music-player {
+        padding: 15px 20px;
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .song-img {
+        width: 180px;
+    }
+
+    nav .circle {
+        width: 35px;
+        height: 35px;
+        line-height: 35px;
+    }
+
+    .controls div {
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+    }
+}
+.time-container {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #333;
+    margin-top: -30px;
+    margin-bottom: 30px;
+}
+
+#volume {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #f53192;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 20px 0;
+    transition: background-color 0.3s ease;
+}
+
+#volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 30px;
+    height: 30px;
+    background: #f53192;
+    border-radius: 50%;
+    border: 8px solid #fff;
+    box-shadow: 0 5px 5px rgba(255, 26, 26, 0.22);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+#volume::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.volume-container i {
+    color: #f53192;
+    font-size: 24px;
+}
+
+.volume-container input[type="range"] {
+    flex: 1;
+}
+.music-library {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    color: #333;
+    width: 90%;
+    max-width: 350px;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    padding: 20px;
+    display: none;
+    z-index: 1000;
+}
+
+.music-library.show {
+    display: block;
+}
+
+.music-library h2 {
+    margin-bottom: 10px;
+    color: #f53192;
+    font-size: 20px;
+}
+
+.music-library ul {
+    list-style: none;
+}
+
+.music-library li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.music-library li:hover {
+    background: #ffe0e5;
+}
+

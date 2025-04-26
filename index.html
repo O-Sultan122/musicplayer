@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/5f8e7b57fa.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-angle-left"></i>
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+            <img src="media/THUMBNAIL1.png" class="song-img" alt="song thumbnail">
+            <h1 id="song-title">Just the Two of Us (feat. Bill Withers)</h1>
+            <p id="song-artist">Grover Washington, Jr.</p>
+
+            <audio id="song">
+                <source src="media/Just the Two of Us (feat. Bill Withers) [6POZlJAZsok].mp3" type="audio/mpeg">
+            </audio>
+
+            <input type="range" value="0" id="progress">
+            <div class="time-container">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+            
+            <div class="volume-container">
+                <i class="fa-solid fa-volume-high"></i>
+                <input type="range" id="volume" min="0" max="1" step="0.01" value="1">
+            </div>
+            <div class="music-library" id="musicLibrary">
+                <h2>Library</h2>
+                <ul id="libraryList">
+                    
+                </ul>
+            </div>
+                        
+
+            <div class="controls">
+                <div onclick="previousTrack()"><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playpause()"><i class="fa-solid fa-circle-play" id="ctrlicon"></i></div>
+                <div onclick="nextTrack()"><i class="fa-solid fa-forward"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let playlist = [
+            {
+                src: "media/Gary B.B. Coleman - The Sky is Crying [71Gt46aX9Z4].mp3",
+                title: "The Sky is Crying",
+                artist: "Gary B.B. Coleman"
+            },
+            {
+                src: "media/Arctic Monkeys - Do I Wanna Know_ (Official Video) [bpOSxM0rNPM].mp3",
+                title: "Do I Wanna Know?",
+                artist: "Arctic Monkeys"
+            },
+            {
+                src: "media/Just the Two of Us (feat. Bill Withers) [6POZlJAZsok].mp3",
+                title: "Just the Two of Us (feat. Bill Withers)",
+                artist: "Grover Washington, Jr."
+            }
+        ];
+        const musicLibrary = document.getElementById("musicLibrary");
+const libraryList = document.getElementById("libraryList");
+const barsIcon = document.querySelector(".fa-bars"); 
+
+// Toggle library visibility
+barsIcon.addEventListener("click", () => {
+    musicLibrary.classList.toggle("show");
+});
+
+// Load songs into library
+function populateLibrary() {
+    libraryList.innerHTML = "";
+    playlist.forEach((track, index) => {
+        const li = document.createElement("li");
+        li.textContent = track.title + " - " + track.artist;
+        li.addEventListener("click", () => {
+            currentTrackIndex = index;
+            loadTrack(index);
+            musicLibrary.classList.remove("show"); // Hide library after selection
+        });
+        libraryList.appendChild(li);
+    });
+}
+
+populateLibrary(); 
+
+
+        let currentTrackIndex = 2; 
+
+        const song = document.getElementById("song");
+        const progress = document.getElementById("progress");
+        const ctrlicon = document.getElementById("ctrlicon");
+        const volumeControl = document.getElementById("volume");
+        const songTitle = document.getElementById("song-title");
+        const songArtist = document.getElementById("song-artist");
+
+        function loadTrack(index) {
+            song.src = playlist[index].src;
+            songTitle.textContent = playlist[index].title;
+            songArtist.textContent = playlist[index].artist;
+            song.load();
+            song.play();
+            ctrlicon.classList.add("fa-circle-pause");
+            ctrlicon.classList.remove("fa-circle-play");
+        }
+
+        function previousTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+        }
+
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+        }
+
+        function playpause() {
+            if (song.paused) {
+                song.play();
+                ctrlicon.classList.add("fa-circle-pause");
+                ctrlicon.classList.remove("fa-circle-play");
+            } else {
+                song.pause();
+                ctrlicon.classList.remove("fa-circle-pause");
+                ctrlicon.classList.add("fa-circle-play");
+            }
+        }
+
+        song.onloadedmetadata = function() {
+            progress.max = song.duration;
+        };
+
+        song.ontimeupdate = function() {
+            progress.value = song.currentTime;
+        };
+
+        progress.oninput = function() {
+            song.currentTime = progress.value;
+            song.play();
+            ctrlicon.classList.add("fa-circle-pause");
+            ctrlicon.classList.remove("fa-circle-play");
+        };
+
+        volumeControl.addEventListener("input", function() {
+            song.volume = volumeControl.value;
+        });
+        const currentTimeEl = document.getElementById("currentTime");
+const durationEl = document.getElementById("duration");
+
+// Helper function to format seconds into mm:ss
+function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? "0" + secs : secs}`;
+}
+
+// Update duration when metadata is loaded
+song.onloadedmetadata = function() {
+    progress.max = song.duration;
+    durationEl.textContent = formatTime(song.duration);
+};
+
+// Update current time as the song plays
+song.ontimeupdate = function() {
+    progress.value = song.currentTime;
+    currentTimeEl.textContent = formatTime(song.currentTime);
+};
+
+    </script>
+</body>
+</html>
